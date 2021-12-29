@@ -16,6 +16,20 @@ export default class PostsController {
     return postagem;
   }
 
+  async update({params, request, response}: HttpContext) {
+    const { id } = params;
+    const myPost = await Post.find(id);
+
+    if(!myPost){
+      response.notFound();
+    } else {
+      const myData = request.only(['title', 'content'])
+      myPost.merge(myData);
+      await myPost.save();
+      return myPost;
+    }
+  }
+
   async show({params, response}){
     const post_id = params.id
     const post = await Post.find(post_id)
