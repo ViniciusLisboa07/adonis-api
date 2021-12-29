@@ -25,3 +25,4 @@ Route.get('/', async () => {
 })
 Route.get('/posts', 'PostsController.index')
 Route.post('/posts', 'PostsController.store')
+Route.get('/posts/:id', 'PostsController.show')

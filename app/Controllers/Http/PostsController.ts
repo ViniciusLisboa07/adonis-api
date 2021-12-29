@@ -1,5 +1,5 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { HttpContext } from "@adonisjs/core/build/standalone";
+import { HttpContext, Response } from "@adonisjs/core/build/standalone";
 import Post from "App/Models/Post";
 
 export default class PostsController {
@@ -12,7 +12,18 @@ export default class PostsController {
   async store({request}: HttpContext) {
     const myData = request.only(['title', 'content'])
 
-    const postagem = Post.create(myData);
+    const postagem = await Post.create(myData);
     return postagem;
+  }
+
+  async show({params, response}){
+    const post_id = params.id
+    const post = await Post.find(post_id)
+
+    if(!post) {
+      response.notFound();
+    }
+
+    return post;
   }
 }
