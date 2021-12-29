@@ -26,4 +26,16 @@ export default class PostsController {
 
     return post;
   }
+
+  async destroy({ params, response }) {
+    const { id } = params;
+    const post = await Post.find(id);
+
+    if (!post) {
+      return response.notFound();
+    }
+
+    await post.delete()
+    return post
+  }
 }
