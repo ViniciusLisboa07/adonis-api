@@ -7,7 +7,8 @@ export default class Users extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('username')
-      table.string('email')
+      table.string('email').unique().notNullable()
+      table.boolean('is_admin').defaultTo(0)
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
