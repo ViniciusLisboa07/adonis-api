@@ -9,7 +9,10 @@ export default class PostsController {
     return allPosts
   }
 
-  store({}: HttpContext) {
-    return {it:'Also Works'}
+  async store({request}: HttpContext) {
+    const myData = request.only(['title', 'content'])
+
+    const postagem = Post.create(myData);
+    return postagem;
   }
 }
